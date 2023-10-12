@@ -1,0 +1,56 @@
+name: Deploy on QA
+
+on:
+  push:
+    branches: ["main", "develop", "staging"]
+  workflow_dispatch:
+
+jobs:
+  deploy_on_qa:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+
+      - name: Create notifications Env file
+        working-directory: ./notifications
+        run: |
+          touch .env
+          echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_NAME=${{ secrets.NOTIFICATIONS_DB_NAME }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+          echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
+          echo SENDER_EMAIL_PASSWORD=${{ secrets.DB_SENDER_EMAIL_PASSWORD }} >> .env
+          echo SENDER_EMAIL=${{ secrets.DB_SENDER_EMAIL }} >> .env
+          echo BASE_URL=${{ secrets.DB_BASE_URL }} >> .env
+          echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
+          echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
+          echo TWILIO_ACCOUNT_SID=${{ secrets.TWILIO_ACCOUNT_SID }} >> .env
+          echo TWILIO_AUTH_TOKEN=${{ secrets.TWILIO_AUTH_TOKEN }} >> .env
+          echo TWILIO_PHONE_NUMBER=${{ secrets.TWILIO_PHONE_NUMBER }} >> .env
+          echo REDIS_HOST=${{ secrets.REDIS_HOST }} >> .env
+          echo REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} >> .env
+          echo REDIS_PORT=${{ secrets.REDIS_PORT }} >> .env
+          echo PORT=8001 >> .env
+          echo DAILY_CRON_SCHEDULE_SYNTAX=${{ secrets.DAILY_CRON_SCHEDULE_SYNTAX }} >> .env
+          cat .env
+      
+     
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+      
+      - name: Deploy on Elastic beanstalk QA Env
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: rate-limiter-v1
+          environment_name: rate-limiter-v1-staging
+          version_label: "ver-${{github.sha}}"
+          use_existing_version_if_available: true
+          region: ap-northeast-1
+          deployment_package: deploy.zip

@@ -1,0 +1,16 @@
+create db
+npx sequelize-cli db:create
+
+create model and migration
+npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+
+migration
+npx sequelize-cli db:migrate
+
+generating seeds
+
+npx sequelize-cli seed:generate --name sample-users
+
+running seeds
+
+npx sequelize-cli db:seed:all

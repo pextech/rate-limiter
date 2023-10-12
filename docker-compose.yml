@@ -1,0 +1,40 @@
+version: "3"
+services:
+  postgres-db:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: 'user'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'password'
+    volumes:
+      - ./db/:/data/db
+
+  notifications:
+    build:
+      dockerfile: Dockerfile
+      context: ./notifications
+    container_name: notifications
+    ports:
+      - "8001:8001"
+    restart: always
+    depends_on:
+      - "postgres-db"
+    environment:
+      POSTGRES_DB: 'notifications'
+    volumes:
+      - .:/app/
+      - /app/notifications/node_modules
+    env_file:
+      - ./notifications/.env
+  
+  nginx-proxy:
+    build:
+      dockerfile: Dockerfile
+      context: ./proxy
+    depends_on:
+      - notifications
+    ports:
+      - 80:80
