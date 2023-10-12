@@ -39,28 +39,6 @@ class UserService {
     return user;
   }
 
-  public static async addUser(user: any): Promise<User> {
-    const newUser = await User.create(user);
-    return newUser;
-  }
-
-  public static async updateUser(
-    id: number,
-    options: Partial<InferCreationAttributes<User, { omit: never }>>
-  ): Promise<any> {
-    return await User.update(options, {
-      where: { id },
-    });
-  }
-
-  public static async deleteUser(id: number): Promise<any> {
-    return await User.destroy({
-      where: {
-        id,
-      },
-    });
-  }
-
   public static sendSmsToUser(phoneNumber: string, message: string) {
     const accountSid = twilio_account_sid;
     const authToken = twilio_auth_token;

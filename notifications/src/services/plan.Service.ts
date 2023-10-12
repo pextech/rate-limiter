@@ -65,7 +65,6 @@ export default class PlanService {
       await UserPlanSubscription.update({PlanId: planId}, {where: {id: existingSubscription.id}})
     }
 
-
     return subscription;
   }
 

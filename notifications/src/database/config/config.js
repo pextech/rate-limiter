@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 require('dotenv').config();
 const { DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_PORT } = process.env;
 

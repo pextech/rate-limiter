@@ -22,7 +22,6 @@ enum ErrorType {
 }
 
 export abstract class ApiError extends Error {
-  // eslint-disable-next-line
   constructor(
     public type: ErrorType,
     public message: string = 'error',

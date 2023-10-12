@@ -6,7 +6,6 @@ import {
   InternalError,
   NotFoundError,
 } from '../../../core/ApiError';
-import Logger from '../../../core/Logger';
 
 const errorHandler = (
   err: Error,

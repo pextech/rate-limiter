@@ -6,7 +6,6 @@ import {
 import NotificationService from '../../../services/notification.Service';
 import {
   NOTIFICATION_TYPE,
-  NotificationAttributes,
 } from '../../../../../interface/notifications';
 import PaginationService from '../../../../../middlewares/pagination';
 import { ignoreKeys } from '../../../../../interface/pagination';

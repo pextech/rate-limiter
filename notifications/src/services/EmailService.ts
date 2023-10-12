@@ -1,12 +1,10 @@
-import { Response } from 'express';
 import * as nodemailer from 'nodemailer';
 import { senderEmail, senderEmailPassword } from '../config';
 
 export const emailService = async (
   to: string,
   subject: string,
-  htmlTemplate: string,
-  res?: Response
+  htmlTemplate: string
 ) => {
 
   let transporter = nodemailer.createTransport({

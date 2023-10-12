@@ -1,4 +1,3 @@
-  // @ts-ignore
 import { Request, Response } from 'express';
 import {
   BadRequestResponse,

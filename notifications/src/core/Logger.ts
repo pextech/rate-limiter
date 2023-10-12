@@ -32,7 +32,6 @@ const options = {
   },
 };
 
-//creates a logger instace and exports it. It logs to a daily rotate file on uncaught exceptions
 export default createLogger({
   transports: [
     new transports.Console({
@@ -41,5 +40,5 @@ export default createLogger({
     }),
   ],
   exceptionHandlers: [new DailyRotateFile(options.file)],
-  exitOnError: false, // do not exit on unhandled exceptions
+  exitOnError: false,
 });
