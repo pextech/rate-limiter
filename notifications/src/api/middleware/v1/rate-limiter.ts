@@ -133,7 +133,7 @@ const generalLimiter = async (userId: string, next: NextFunction, limit: number,
      
         const { userId, subscription } = res.locals
 
-        return generalLimiter(userId.toString(), next, subscription.Plan.requestPerMinute, 'minutes', res)
+        return generalLimiter(userId.toString(), next, subscription.Plan.requestPerMinute ?? 5, 'minutes', res)
   
     } catch (error) {
       next(error);
@@ -149,7 +149,7 @@ const generalLimiter = async (userId: string, next: NextFunction, limit: number,
      
         const { userId, subscription } = res.locals
 
-        return generalLimiter(userId.toString(), next, subscription.Plan.monthlyRequests, 'months', res)
+        return generalLimiter(userId.toString(), next, subscription.Plan.monthlyRequests ?? 5, 'months', res)
  
     } catch (error) {
       next(error);

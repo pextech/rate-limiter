@@ -44,7 +44,7 @@ app.use(checkuserIp);
 app.use(overalMonthlylLimiter)
 
 
-app.get('/notifications', (req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response) => {
   return res.status(200).json({
     environment,
     message: `Welcome to Notifications Service Backend Server`,
