@@ -36,6 +36,16 @@
     DB_PASSWORD=
     DB_PORT=5432
     DB_USERNAME=
+   SENDER_EMAIL_PASSWORD=
+   SENDER_EMAIL=
+   
+   TWILIO_ACCOUNT_SID=
+   TWILIO_AUTH_TOKEN=
+   TWILIO_PHONE_NUMBER=
+   
+   REDIS_PASSWORD=
+   REDIS_HOST=
+   REDIS_PORT=
    ```
 
 4. Running the app locally
@@ -43,10 +53,14 @@
    Run this command, which is located in npm script in `package.json` file.
 
    ```bash
-   npm run dev
+   cd notifications
    ```
 
-5. Get your database ready
+   ```bash
+   npm run dev 
+   ```
+
+6. Get your database ready
 
    Run this command, which is located in npm script
 
